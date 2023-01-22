@@ -1,11 +1,11 @@
-name: Run Python Script
+name: Transcribe Audio
 
 on:
   schedule:
     - cron: '0 0 * * *'  # runs every day at midnight
 
 jobs:
-  run-script:
+  transcribe:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,12 +16,3 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
-
-    - name: Install dependencies
-      run: |
-        pip install google-cloud-speech
-
-- name: Transcribe Audio
-  run: |
-    export GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
-    python script.py
