@@ -19,3 +19,23 @@ audio_url = "https://www.oksenate.gov/audio/SENATE_FLOOR_SESSION_2022-01-01.mp3"
 transcribed_text = transcribe_audio(audio_url)
 print(transcribed_text)
 
+import os
+from google.cloud import speech_v1p1beta1 as speech
+
+def transcribe_audio(audio_url):
+    # download audio file from url
+    urllib.request.urlretrieve(audio_url, "audio.wav")
+    # read audio file
+    with open("audio.wav", "rb") as audio_file:
+        content = audio_file.read()
+    # setup client with api key
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "AIzaSyCqGkb88hHlS90kGax2uS4vzNvym6rTtKE"
+    client = speech.SpeechClient()
+    # transcribe audio file
+    audio = speech.types.RecognitionAudio(content=content)
+    config = speech.types.RecognitionConfig(
+        encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=16000,
+        language_code='en-US')
+    response = client.recognize(config, audio)
+    # get transcribed
