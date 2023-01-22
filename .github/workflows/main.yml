@@ -19,15 +19,4 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-
-    - name: Run script
-      run: |
-        python script.py
-
-    - name: Save results
-      run: |
-        mkdir -p results
-        cp output.txt results/
-        git add results
-        git commit -m "Automated: Save results"
+        pip install google-cloud-speech
