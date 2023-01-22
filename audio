@@ -1,0 +1,21 @@
+import speech_recognition as sr
+import urllib.request
+
+# function to transcribe audio recording
+def transcribe_audio(audio_url):
+    # download audio file from url
+    urllib.request.urlretrieve(audio_url, "audio.wav")
+    # initialize recognizer
+    r = sr.Recognizer()
+    # read audio file
+    with sr.AudioFile("audio.wav") as source:
+        audio = r.record(source)
+    # transcribe audio file
+    transcribed_text = r.recognize_google(audio)
+    return transcribed_text
+
+# transcribe audio recording from website
+audio_url = "https://www.oksenate.gov/audio/SENATE_FLOOR_SESSION_2022-01-01.mp3"
+transcribed_text = transcribe_audio(audio_url)
+print(transcribed_text)
+
